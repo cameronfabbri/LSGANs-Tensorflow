@@ -23,20 +23,9 @@ but both were generally converging. This was generated using `createPhotos.py`.
 
 Critic loss
 
-![d](http://i.imgur.com/Mtx7rlK.png)
-
 Generator loss
 
-![g](http://i.imgur.com/bJBQhBX.png)
-
 ### Training
-Training is pretty slow due to the small learning rate and multiple updates of the critic for one
-update of the generator. Preloading the data helps speed it up a bit. These were trained on a GTX-1080
-for about 24 hours.
-
-I noticed that clipping the weights of the critic to [-0.1, 0.1] like they do in the paper caused the
-critic and generator loss to not really change, although image quality was increasing. I found that instead
-clipping the weights to [-0.05, 0.05] worked a bit better, showing better image quality and convergence.
 
 ### Data
 Standard practice is to resize the CelebA images to 96x96 and the crop a center 64x64 image. `loadceleba.py`
@@ -58,7 +47,7 @@ Before training, go to `config.py` and set the path to your dataset.
 If you have more than 7 GB of RAM, setting load to True will preload all of the
 images into memory, so no reading from disk is required after this step.
 
-`python main.py config.py`
+`python train.py`
 
 #### View Results
 
