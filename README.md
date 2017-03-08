@@ -19,7 +19,7 @@ Here are some non cherry-picked generated images after ~120,000 iterations. Imag
 blurry after ~100,000 iterations. The loss in the graphs shows the critic was starting to get worse,
 but both were generally converging. This was generated using `createPhotos.py`.
 
-![img](http://i.imgur.com/PJngSlg.jpg)
+![img](http://i.imgur.com/ZtSRy5y.png)
 
 Critic loss
 
