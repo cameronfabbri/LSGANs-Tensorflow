@@ -39,7 +39,8 @@ change how often logs are committed.
 #### Train
 ```python
 python train.py --DATA_DIR=/path/to/images/
-`
+
+```
 
 #### View Results
 
