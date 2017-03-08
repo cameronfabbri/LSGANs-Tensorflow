@@ -45,17 +45,17 @@ def netG(z, batch_size):
 
    conv7 = slim.convolution2d_transpose(conv6, 3, 3, stride=1, activation_fn=tf.identity, scope='g_conv7')
    conv7 = tf.nn.tanh(conv7)
+   conv7 = conv7[:,:64,:64,:]
    print 'conv7:',conv7
    print
    print 'END G'
    print
-   exit()
    tf.add_to_collection('vars', conv1)
    tf.add_to_collection('vars', conv2)
    tf.add_to_collection('vars', conv3)
    tf.add_to_collection('vars', conv4)
 
-   return conv4 
+   return conv7 
 
 
 '''
@@ -83,9 +83,10 @@ def netD(input_images, batch_size, reuse=False):
       conv4 = lrelu(conv4)
       print 'conv4:',conv4
 
-      conv5 = slim.convolution(conv4, 1, 4, stride=2, activation_fn=tf.identity, scope='d_conv5')
-      print 'conv5:',conv5
-      
+      conv4 = tf.reshape(conv4, [batch_size, -1])
+      fc1 = slim.fully_connected(conv4, 1, scope='d_fc1', activation_fn=tf.identity)
+      fc1 = tf.nn.sigmoid(fc1)
+      print 'fc1:',fc1
       print 'END D\n'
       
       tf.add_to_collection('vars', conv1)

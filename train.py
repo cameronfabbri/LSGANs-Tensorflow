@@ -24,7 +24,7 @@ def buildAndTrain(checkpoint_dir):
 
    # placeholders for data going into the network
    global_step = tf.Variable(0, name='global_step', trainable=False)
-   z           = tf.placeholder(tf.float32, shape=(batch_size, 100), name='z')
+   z           = tf.placeholder(tf.float32, shape=(batch_size, 1024), name='z')
 
    train_images_list = data_ops.loadCeleba(data_dir)
    filename_queue    = tf.train.string_input_producer(train_images_list)
@@ -57,10 +57,10 @@ def buildAndTrain(checkpoint_dir):
    g_vars = [var for var in t_vars if 'g_' in var.name]
 
    # optimize G
-   G_train_op = tf.train.RMSPropOptimizer(learning_rate=0.00005).minimize(errG, var_list=g_vars, global_step=global_step)
+   G_train_op = tf.train.AdamOptimizer(learning_rate=1e-4).minimize(errG, var_list=g_vars, global_step=global_step)
 
    # optimize D
-   D_train_op = tf.train.RMSPropOptimizer(learning_rate=0.00005).minimize(errD, var_list=d_vars, global_step=global_step)
+   D_train_op = tf.train.AdamOptimizer(learning_rate=1e-4).minimize(errD, var_list=d_vars, global_step=global_step)
 
    saver = tf.train.Saver(max_to_keep=1)
    init  = tf.global_variables_initializer()
@@ -117,7 +117,7 @@ def buildAndTrain(checkpoint_dir):
       print 'step:',step,'D loss:',D_loss,'G_loss:',G_loss,'time:',time.time()-start
       step += 1
     
-      if step%1000 == 0:
+      if step%500 == 0:
          print 'Saving model...'
          saver.save(sess, checkpoint_dir+'checkpoint-'+str(step))
          saver.export_meta_graph(checkpoint_dir+'checkpoint-'+str(step)+'.meta')

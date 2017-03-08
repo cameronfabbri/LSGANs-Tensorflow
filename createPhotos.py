@@ -23,7 +23,7 @@ if __name__ == '__main__':
 
    canvas = 255*np.ones((m*img_size[0]+(10*m)+10, n*img_size[1]+(10*n)+10, 3), dtype=np.uint8)
    
-   z = tf.placeholder(tf.float32, shape=(num_images, 100), name='z')
+   z = tf.placeholder(tf.float32, shape=(num_images, 1024), name='z')
    generated_images = netG(z, num_images)
    
    init = tf.global_variables_initializer()
@@ -42,7 +42,7 @@ if __name__ == '__main__':
          print "Could not restore model"
          exit()
 
-   batch_z = np.random.normal(-1.0, 1.0, size=[num_images, 100]).astype(np.float32)
+   batch_z = np.random.normal(-1.0, 1.0, size=[num_images, 1024]).astype(np.float32)
    gen_imgs = sess.run([generated_images], feed_dict={z:batch_z})
    gen_imgs = np.squeeze(np.asarray(gen_imgs))
 
