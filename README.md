@@ -9,17 +9,13 @@ Requirements
 * [Tensorflow v1.0](https://www.tensorflow.org/)
 
 Datasets
-* [CelebA dataset](https://www.dropbox.com/sh/8oqt9vytwxb3s4r/AADIKlz8PR9zr6Y20qbkunrba/Img/img_align_celeba.zip)
+* LSUN
 * Image-net (coming soon)
 
 ___
 
-### Results
-Here are some non cherry-picked generated images after ~120,000 iterations. Images started to get a tad
-blurry after ~100,000 iterations. The loss in the graphs shows the critic was starting to get worse,
-but both were generally converging. This was generated using `createPhotos.py`.
 
-![img](http://i.imgur.com/ZtSRy5y.png)
+### Results
 
 Critic loss
 
@@ -41,13 +37,9 @@ change how often logs are committed.
 ### How to
 
 #### Train
-**You must have a dataset ready to train.**
-
-Before training, go to `config.py` and set the path to your dataset.
-If you have more than 7 GB of RAM, setting load to True will preload all of the
-images into memory, so no reading from disk is required after this step.
-
-`python train.py`
+```python
+python train.py --DATA_DIR=/path/to/images/
+`
 
 #### View Results
 
