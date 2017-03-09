@@ -2,8 +2,6 @@ import tensorflow as tf
 import tensorflow.contrib.slim as slim
 import sys
 
-import config
-
 '''
    Leaky RELU
    https://arxiv.org/pdf/1502.01852.pdf
@@ -45,7 +43,6 @@ def netG(z, batch_size):
 
    conv7 = slim.convolution2d_transpose(conv6, 3, 3, stride=1, activation_fn=tf.identity, scope='g_conv7')
    conv7 = tf.nn.tanh(conv7)
-   conv7 = conv7[:,:64,:64,:]
    print 'conv7:',conv7
    print
    print 'END G'

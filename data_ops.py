@@ -8,8 +8,6 @@ import fnmatch
 import cPickle as pickle
 import scipy.misc as misc
 
-import config
-
 def _read_input(filename_queue):
    class DataRecord(object):
       pass
@@ -18,38 +16,33 @@ def _read_input(filename_queue):
    record             = DataRecord()
    decoded_image      = tf.image.decode_jpeg(value, channels=3)
    decoded_image_4d   = tf.expand_dims(decoded_image, 0)
-   resized_image      = tf.image.resize_bilinear(decoded_image_4d, [96, 96])
-   record.input_image = tf.squeeze(resized_image, squeeze_dims=[0])
-   cropped_image      = tf.cast(tf.image.central_crop(decoded_image, 0.6), tf.float32)
-   decoded_image_4d   = tf.expand_dims(cropped_image, 0)
-   resized_image      = tf.image.resize_bilinear(decoded_image_4d, [64, 64])
+   resized_image      = tf.image.resize_bilinear(decoded_image_4d, [112, 112])
    record.input_image = tf.squeeze(resized_image, squeeze_dims=[0])
    return record
 
 
-def read_input_queue(filename_queue):
+def read_input_queue(filename_queue, batch_size):
    read_input = _read_input(filename_queue)
    num_preprocess_threads = 8
    min_queue_examples = int(0.1 * 100)
    print("Shuffling")
    input_image = tf.train.shuffle_batch([read_input.input_image],
-                                        batch_size=config.batch_size,
+                                        batch_size=batch_size,
                                         num_threads=num_preprocess_threads,
-                                        capacity=min_queue_examples + 8 * config.batch_size,
+                                        capacity=min_queue_examples + 8 * batch_size,
                                         min_after_dequeue=min_queue_examples)
    input_image = input_image/127.5 - 1.
    return input_image
 
 
-def saveImage(images, step):
+def saveImage(images, step, images_dir):
    num = 0
    for image in images:
-
       image = (image+1.)
       image *= 127.5
       image = np.clip(image, 0, 255).astype(np.uint8)
-      image = np.reshape(image, (64, 64, -1))
-      misc.imsave('images/'+config.dataset+'/'+str(step)+'_'+str(num)+'.jpg', image)
+      #image = np.reshape(image, (64, 64, -1))
+      misc.imsave(images_dir+str(step)+'_'+str(num)+'.jpg', image)
       num += 1
       if num == 5:
          break
@@ -71,10 +64,10 @@ def getPaths(data_dir, ext='jpg'):
 '''
    Loads the celeba data
 '''
-def loadCeleba(data_dir):
+def loadCeleba(data_dir, dataset):
    
    # celeba pickle file contains a list of images
-   pkl_file = './celeba.pkl'
+   pkl_file = './'+dataset+'.pkl'
 
    # first, check if a pickle file has been made with the image paths
    if os.path.isfile(pkl_file):

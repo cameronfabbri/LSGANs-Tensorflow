@@ -9,6 +9,7 @@ import tensorflow as tf
 import numpy as np
 from architecture import netG
 import sys
+from scipy import misc
 
 if __name__ == '__main__':
 
@@ -19,7 +20,7 @@ if __name__ == '__main__':
 
    num_images = n*m
 
-   img_size = (64, 64, 3)
+   img_size = (112, 112, 3)
 
    canvas = 255*np.ones((m*img_size[0]+(10*m)+10, n*img_size[1]+(10*n)+10, 3), dtype=np.uint8)
    
@@ -53,24 +54,28 @@ if __name__ == '__main__':
    y = 0
 
    for img in gen_imgs:
-      img = (img+1.)/2. # these two lines properly scale from [-1, 1] to [0, 255]
-      img *= 255.0/img.max()
-
-      end_x = start_x+64
-      end_y = start_y+64
+      
+      img = (img+1.)
+      img *= 127.5
+      img = np.clip(img, 0, 255).astype(np.uint8)
+      img = np.reshape(img, (112, 112, -1))
+      
+      end_x = start_x+112
+      end_y = start_y+112
       
       canvas[start_y:end_y, start_x:end_x, :] = img
 
       if x < n:
-         start_x += 64+10
+         start_x += 112+10
          x += 1
       if x == n:
          x       = 0
          start_x = 10
          start_y = end_y + 10
-         end_y   = start_y+64
+         end_y   = start_y+112
 
-   cv2.imwrite('results.jpg', canvas)
+   misc.imsave('results.png', canvas)
+   #cv2.imwrite('results.jpg', canvas)
    #cv2.imshow('canvas', canvas)
    #cv2.waitKey(0)
    #cv2.destroyAllWindows()
