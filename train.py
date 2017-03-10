@@ -120,11 +120,11 @@ if __name__ == '__main__':
       sess.run(G_train_op, feed_dict={z:batch_z})
 
       # now get all losses and summary *without* performing a training step - for tensorboard
-      D_loss, G_loss, summary = sess.run([errD, errG, merged_summary_op], feed_dict={z:batch_z})
+      D_real, D_fake, D_loss, G_loss, summary = sess.run([errD_real, errD_fake, errD, errG, merged_summary_op], feed_dict={z:batch_z})
       summary_writer.add_summary(summary, step)
 
       if step%10 == 0:
-         print 'epoch_num:',epoch_num,'step:',step,'D loss:',D_loss,'G_loss:',G_loss,'time:',time.time()-start
+         print 'epoch_num:',epoch_num,'step:',step,'D_real:',D_real,'D_fake:',D_fake,'D loss:',D_loss,'G_loss:',G_loss,'time:',time.time()-start
       step += 1
     
       if step%1000 == 0:
