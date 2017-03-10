@@ -10,7 +10,6 @@ Requirements
 
 Datasets
 * LSUN
-* Image-net (coming soon)
 
 ___
 
