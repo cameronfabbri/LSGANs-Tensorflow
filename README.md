@@ -16,28 +16,23 @@ ___
 
 
 ### Results
+The results aren't as good as the paper shows, and I'm still investigating why.
 
-Critic loss
-
-Generator loss
+![img](http://i.imgur.com/ilBIXhI.png)
 
 ### Training
 
 ### Data
-Standard practice is to resize the CelebA images to 96x96 and the crop a center 64x64 image. `loadceleba.py`
-takes as input the directory to your images, and will resize them upon loading. To load the entire dataset
-at the start instead of reading from disk each step, you will need about 200000\*64\*64\*3\*3 bytes = ~7.5
-GB of RAM.
-
-### Tensorboard
-Tensorboard logs are stored in `checkpoints/celeba/logs`. I am updating Tensorboard every step as training
-isn't completely stable yet. *These can get very big*, around 50GB. See around line 115 in `train.py` to
-change how often logs are committed.
+I used the LSUN church dataset. The images are resized to 112x112 (same size as the generator produces).
 
 ### How to
 
 #### Train
-`python train.py --DATA_DIR=/path/to/images/`
+`python train.py --DATA_DIR=[/path/to/images/] --DATASET=[dataset] --BATCH_SIZE=[batch_size]`
+
+For example, if you have the [LSUN dataset](http://lsun.cs.princeton.edu/2016/)
+
+`pytohn train.py --DATA_DIR=/mnt/lsun/church/images/ --DATASET=church`
 
 
 #### View Results
