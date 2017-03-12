@@ -17,7 +17,11 @@ ___
 ### Results
 The results aren't as good as the paper shows, and I'm still investigating why.
 
+Churches from LSUN
 ![img](http://i.imgur.com/ilBIXhI.png)
+
+Bedrooms from LSUN
+![img2](http://i.imgur.com/p2nB2B0.png)
 
 ### Training
 
