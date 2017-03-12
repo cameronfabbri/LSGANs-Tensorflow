@@ -18,15 +18,15 @@ ___
 The results aren't as good as the paper shows, and I'm still investigating why.
 
 Churches from LSUN
-![img](http://i.imgur.com/ilBIXhI.png)
+![img](http://i.imgur.com/r2Lyavw.png)
 
 Bedrooms from LSUN
-![img2](http://i.imgur.com/p2nB2B0.png)
+![img2](http://i.imgur.com/mhhXjby.png)
 
 ### Training
 
 ### Data
-I used the LSUN church dataset. The images are resized to 112x112 (same size as the generator produces).
+I used the LSUN church and bedroom dataset. The images are resized to 112x112 (same size as the generator produces).
 
 ### How to
 
