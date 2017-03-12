@@ -42,7 +42,7 @@ For example, if you have the [LSUN dataset](http://lsun.cs.princeton.edu/2016/)
 
 To see a fancy picture such as the one on this page, simply run
 
-`python createPhotos.py checkpoints/celeba/`
+`python createPhotos.py checkpoints/church/`
 
 or wherever your model is saved.
 
