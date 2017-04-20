@@ -52,12 +52,8 @@ if __name__ == '__main__':
    errD_real = tf.reduce_mean(netD(real_images, BATCH_SIZE))
    errD_fake = tf.reduce_mean(netD(gen_images, BATCH_SIZE, reuse=True))
 
-   #errD = tf.reduce_mean((errD_real-b)**2 - (errD_fake-a)**2)
-   #errG = tf.reduce_mean((errD_fake-c)**2)
-   #errD = tf.reduce_mean(0.5*((errD_real-1)**2) + 0.5*((errD_fake)**2))
-   #errG = tf.reduce_mean(0.5*((errD_fake - 1)**2))
-   errD = tf.square(errD_real - 1) + tf.square(errD_fake)
-   errG = tf.square(errD_fake - 1)
+   errD = 0.5*(tf.square(errD_real - 1)) + 0.5*(tf.square(errD_fake))
+   errG = 0.5*(tf.square(errD_fake - 1))
 
    # tensorboard summaries
    tf.summary.scalar('d_loss', errD)
@@ -79,7 +75,6 @@ if __name__ == '__main__':
 
    saver = tf.train.Saver(max_to_keep=1)
    init  = tf.global_variables_initializer()
-   #init = tf.group(tf.global_variables_initializer(), tf.local_variables_initializer())
    
    sess  = tf.Session()
    sess.run(init)
